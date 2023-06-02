@@ -14,3 +14,16 @@ class Challenge:
         self.score_max = score_max
         self.difficulty = difficulty
         self.tags = tags
+
+    def get_dict(self):
+        return {
+            'url': self.url,
+            'title': self.title,
+            'category': self.category,
+            'remaining_score': self.remaining_score,
+            'questions_count': self.questions_count,
+            'remaining_questions': self.remaining_questions,
+            'score_max': self.score_max,
+            'difficulty': self.difficulty,
+            'tags': self.tags
+        }

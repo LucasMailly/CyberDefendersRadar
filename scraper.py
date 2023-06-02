@@ -6,15 +6,17 @@ import logging
 import argparse
 import time
 from tabulate import tabulate
+from tqdm import tqdm
+import csv
 
 from Challenge import Challenge
-
 
 # Argument parser
 parser = argparse.ArgumentParser(description="Scrapes challenge data from the Cyber Defenders website to sort them by best score.")
 parser.add_argument("-t", "--token", action="store", type=str, required=True, help="Session token to use for authenticated requests.")
 parser.add_argument("-a", "--all", action="store_true", help="Scrape all challenges.")
 parser.add_argument("-d", "--delay", action="store", type=float, default=0.5, help="Delay between requests in seconds. Default: 0.5")
+parser.add_argument("-o", "--output", action="store", type=str, help="Output csv file to write to.")
 parser.add_argument("--debug", action="store_true", help="Enable debug logging.")
 args = parser.parse_args()
 
@@ -261,11 +263,13 @@ def fetch_challenges():
     """Fetches all the challenges from the website and sorts them by remaining_score in descending order."""
 
     # Fetch all the challenge urls
+    logger.info("Fetching challenge urls...")
     challenge_urls = fetch_challenge_urls()
 
     # Fetch all the challenges
+    logger.info(f"Fetching {len(challenge_urls)} challenges data...")
     challenges = []
-    for url in challenge_urls:
+    for url in tqdm(challenge_urls, desc="Progression", unit="challenge"):
         challenge = fetch_challenge(url)
         if challenge:
             challenges.append(challenge)
@@ -282,3 +286,12 @@ if __name__ == "__main__":
     data = [[getattr(challenge, attr) for attr in attributes] for challenge in challenges]
     
     print(tabulate(data, headers=attributes, tablefmt="pretty"))
+
+    # Save the data to a csv file if output is specified
+    if args.output:
+        logger.info(f"Saving data to {args.output}...")
+        with open(args.output, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=attributes, delimiter=";")
+            writer.writeheader()
+            for challenge in challenges:
+                writer.writerow(challenge.get_dict())

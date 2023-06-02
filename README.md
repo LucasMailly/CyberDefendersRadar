@@ -23,12 +23,13 @@ Run the tool by executing the `scraper.py` file. Use the following command-line 
 - `-t, --token <token>`: Specify a session token for authenticated scraping.
 - `-a, --all`: Scrape all challenges (including completed challenges).
 - `-d, --delay <delay>`: Set the delay between requests in seconds (default: 0.5).
+- `-o, --output <file>`: Write the output to a file in CSV format.
 - `--debug`: Enable debug logging for more detailed output.
 
 Example usage:
 
 ```shell
-python scraper.py -t <session_token> -d 1.0 --debug
+python scraper.py -t <session_token> -d 1.0 -o output.csv
 ```
 
 The tool will scrape the challenge data from the Cyber Defenders website, sort them by the remaining score, and display the information in a tabular format.
