@@ -11,7 +11,7 @@ This is a Python tool that scrapes challenge data from the Cyber Defenders websi
 ## Installation
 
 1. Clone this repository or download the code.
-2. Install the required Python packages mentioned above.
+2. Install the required Python packages.
 ```shell
 pip install -r requirements.txt
 ```
