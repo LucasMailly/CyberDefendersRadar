@@ -6,6 +6,7 @@ import logging
 import argparse
 import time
 from tabulate import tabulate
+from tqdm import tqdm
 
 from Challenge import Challenge
 
@@ -261,11 +262,13 @@ def fetch_challenges():
     """Fetches all the challenges from the website and sorts them by remaining_score in descending order."""
 
     # Fetch all the challenge urls
+    logger.info("Fetching challenge urls...")
     challenge_urls = fetch_challenge_urls()
 
     # Fetch all the challenges
+    logger.info(f"Fetching {len(challenge_urls)} challenges data...")
     challenges = []
-    for url in challenge_urls:
+    for url in tqdm(challenge_urls, desc="Progression", unit="challenge"):
         challenge = fetch_challenge(url)
         if challenge:
             challenges.append(challenge)
