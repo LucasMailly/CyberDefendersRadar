@@ -1,6 +1,6 @@
 # CyberDefenders Radar
 
-This is a Python tool that scrapes challenge data from the Cyber Defenders website and sorts them by the remaining score. It provides a command-line interface to fetch and display challenge information in a tabular format.
+This is a Python tool that scrapes challenge data from the Cyber Defenders website and sorts them by the remaining score/remaining questions ratio. It provides a command-line interface to fetch and display challenge information in a tabular format.
 
 ## Prerequisites
 
@@ -32,15 +32,13 @@ Example usage:
 python scraper.py -t <session_token> -d 1.0 -o output.csv
 ```
 
-The tool will scrape the challenge data from the Cyber Defenders website, sort them by the remaining score, and display the information in a tabular format.
-
 ## How It Works
 
 The scraper follows these steps:
 
 1. Fetch the challenge URLs from the website.
 2. Fetch the challenge information for each URL.
-3. Sort the challenges by the remaining score in descending order.
+3. Sort the challenges by the remaining score/remaining questions ratio in descending order.
 4. Display the challenge information in a tabular format.
 
 ## License
