@@ -12,7 +12,7 @@ import csv
 from Challenge import Challenge
 
 # Argument parser
-parser = argparse.ArgumentParser(description="Scrapes challenge data from the Cyber Defenders website to sort them by best score.")
+parser = argparse.ArgumentParser(description="Scrapes challenge data from the Cyber Defenders website to sort them by score per question ratio.")
 parser.add_argument("-t", "--token", action="store", type=str, required=True, help="Session token to use for authenticated requests.")
 parser.add_argument("-a", "--all", action="store_true", help="Scrape all challenges.")
 parser.add_argument("-d", "--delay", action="store", type=float, default=0.5, help="Delay between requests in seconds. Default: 0.5")
@@ -241,6 +241,14 @@ def fetch_challenge(challenge_url):
                     return_challenge.remaining_questions = return_challenge.questions_count - questions
                     logger.debug(f"Calculated challenge remaining_questions: {return_challenge.remaining_questions}")
 
+    # Calculate the challenge remaining_score / remaining_questions ratio
+    if return_challenge.remaining_questions == 0:
+        return_challenge.score_questions_ratio = 0
+    else:
+        return_challenge.score_questions_ratio = round(return_challenge.remaining_score / return_challenge.remaining_questions)
+    logger.debug(f"Calculated challenge score_questions_ratio: {return_challenge.score_questions_ratio}")
+
+
     # Get the challenge difficulty
     difficulty_element = soup.find("span", class_="badge")
     if not difficulty_element:
@@ -260,7 +268,7 @@ def fetch_challenge(challenge_url):
     return return_challenge
 
 def fetch_challenges():
-    """Fetches all the challenges from the website and sorts them by remaining_score in descending order."""
+    """Fetches all the challenges from the website and sorts them by remaining_score / remaining_questions ratio"""
 
     # Fetch all the challenge urls
     logger.info("Fetching challenge urls...")
@@ -274,8 +282,8 @@ def fetch_challenges():
         if challenge:
             challenges.append(challenge)
 
-    # Sort the challenges by remaining_score in descending order
-    challenges.sort(key=lambda x: x.remaining_score, reverse=True)
+    # Sort the challenges by remaining_score / remaining_questions ratio (descending)
+    challenges.sort(key=lambda x: x.score_questions_ratio, reverse=True)
     
     return challenges
 
