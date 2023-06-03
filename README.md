@@ -8,6 +8,8 @@ This is a Python tool that scrapes challenge data from the Cyber Defenders websi
 - Account on the [Cyber Defenders](https://cyberdefenders.org/) website
 - Valid session token `__Secure-sessionid`
 
+If you don't know how to get your `__Secure-sessionid` cookie [check this](https://www.cookieyes.com/blog/how-to-check-cookies-on-your-website-manually/).
+
 ## Installation
 
 1. Clone this repository or download the code.
