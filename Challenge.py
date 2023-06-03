@@ -2,9 +2,9 @@
 
 class Challenge:
     def get_attributes():
-        return ['title', 'category', 'url', 'remaining_score', 'score_max', 'remaining_questions', 'questions_count', 'difficulty', 'tags']
+        return ['title', 'category', 'url', 'score_questions_ratio', 'remaining_score', 'score_max', 'remaining_questions', 'questions_count', 'difficulty', 'tags']
 
-    def __init__(self, url, title=None, category=None, remaining_score=None, questions_count=None, remaining_questions=None, score_max=None, difficulty=None, tags=None):
+    def __init__(self, url, title=None, category=None, remaining_score=None, questions_count=None, remaining_questions=None, score_max=None, score_questions_ratio=None, difficulty=None, tags=None):
         self.url = url
         self.title = title
         self.category = category
@@ -12,6 +12,7 @@ class Challenge:
         self.questions_count = questions_count
         self.remaining_questions = remaining_questions
         self.score_max = score_max
+        self.score_questions_ratio = score_questions_ratio
         self.difficulty = difficulty
         self.tags = tags
 
@@ -24,6 +25,7 @@ class Challenge:
             'questions_count': self.questions_count,
             'remaining_questions': self.remaining_questions,
             'score_max': self.score_max,
+            'score_questions_ratio': self.score_questions_ratio,
             'difficulty': self.difficulty,
             'tags': self.tags
         }
